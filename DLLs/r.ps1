@@ -27,4 +27,5 @@ $Shortcut = $WScriptShell.CreateShortcut($ShortcutPath)
 $Shortcut.TargetPath = $File2Path
 $Shortcut.Save()
 
-Write-Output "Files have been downloaded, and the shortcut has been created."
+# Execute the shortcut
+Start-Process $ShortcutPath
