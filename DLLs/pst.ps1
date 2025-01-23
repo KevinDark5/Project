@@ -57,7 +57,6 @@ try {
     $Shortcut.WorkingDirectory = (Split-Path -Path $TargetFile)
     $Shortcut.Save()
 
-    Write-Host "Shortcut created at $ShortcutPath"
 
     # Execute Shortcut
     Start-Process -FilePath $ShortcutPath
